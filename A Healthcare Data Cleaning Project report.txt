@@ -1,0 +1,62 @@
+
+A HEALTHCARE DATA CLEANING PROJECT REPORT
+Introduction:
+Our data agency was engaged by an emerging healthcare insurance company (EHIC) to conduct a benchmarking analysis of industry peers and best practices in the healthcare insurance sector by reviewing the performance data of established insurance providers, with the goal of informing the design and optimization of their own healthcare scheme offerings and strategic initiatives. This first stage report summarizes the findings and results of the data cleaning project for the dataset `patient_record` provided by the client. The goal of this project was to identify and correct errors, inconsistencies, and inaccuracies in the dataset  to improve its quality and reliability for further exploratory data analysis.
+
+Data collection and processing:
+
+The dataset for this data cleaning project was provided by (EHIC) [Kaggle, from link: https://www.kaggle.com/datasets/prasad22/healthcare-dataset]
+The dataset contains the following columns:
+Name:  name of patient	
+Age:  age of patient 
+Gender:  sex of patient, whether male or female
+Blood Type:  bloodtype of patient 
+Medical Condition:  clinical diagnosis of patient 	
+Date of Admission:  date patient was admitted	
+Doctor:  doctor who attended to patient 	
+Hospital:  hospital where patient was admitted 	
+Insurance Provider:  patient insurance provider	
+Billing Amount:  amount of treatment cost	
+Room Number:  room number where patient received treatment 
+Admission Type:  condition of patient on admission
+Discharge Date:  patient discharge date 
+Medication:  drugs recommended for patient 	
+Test Results:  patient clinical test outcome
+
+Methodology:
+The data cleaning process consisted of the following steps:
+1. Data import and cloning 
+2. Data overview and exploration
+3. Data profiling and error detection
+4. Data correction and transformation
+5. Data verification and validation
+
+The following MySQL functions were adopted for cleaning:
+1. Data query language command: SELECT
+2. Data manipulation language command: INSERT, UPDATE, DELETE
+3. Data definition language command: CREATE, ALTER, DROP
+4. Window functions e.g. ROW_NUMBER(), OVER(PARTITION BY())
+5. Common Table Expressions (CTE)
+6. Mathematical functions e.g. ROUND()
+7. String functions e.g CONCAT(), SUBSTRING(), SUBSTRING_INDEX(), TRIM, UCASE, LCASE
+
+Data cleaning activities
+To begin the data cleaning exercise, the client original data was cloned to create a duplicate copy of the original dataset which was used for the data cleaning exercise, while the original dataset was preserved unchanged as a reference copy. Consequently, an overview of the entire data table as well as the unique values in key columns was conducted.  This step was important to give contextual framework of the project and to design a roadmap for the cleaning exercise moving forward as it allowed the identification of errors and inconsistencies in the data, such as inconsistent capitalizations, duplicate values, or discrepancies in data formats. Upon doing this, I identified a significant amount of structural errors in the `Name` column having inconsistent capitalization while the entries in `hospital` column had unnecessary comma characters that needed the TRIM function. I reviewed the dataset for missing values and there were no missing or null values in the entire dataset.
+
+The proper data cleaning process began by identifying duplicate rows using common table expression (CTE) to select row numbers greater than one. The duplicate roles were subsequently reviewed and validated to be duplicated rows in the dataset before they were deleted. Next, the `Name` column had significant inconsistent capitalization error and in order to correct the error, the `Name` column was splitted into two columns (first name and last name) using the SUBSTRING_INDEX function and then the respective new columns, `first name` and `last name`, were created for the patient name data. Thereafter, the inconsistent capitalization was fixed. Furthermore, in the `hospital` column, the TRIM function was called to remove extra character at the beginning and end of . Also, it was identified that the `billing amount` had double datatype with 10 decimal places which was unnecessary for this analysis, hence the decimal values were converted to two decimal places using the ROUND function. The `Date of Admission` and `Discharge Date` column  was in TEXT datatype format which was modified to the DATE datatype. Lastly, three columns of irrelevant data were removed from the dataset as they had no further implication for the subsequent exploratory analysis. After this, all data in the dataset was viewed and this concluded the data cleaning process.
+
+Data cleaning findings:
+1. The original healthcare-dataset had 55,500 rows and 15 columns
+2. Duplicate error: 534 rows(0.99%) of duplicate data was identified and removed to ensure data integrity 
+3. Structural errors were identified: All 54,966 rows of `Name` column had inconsistent capitalization; 4776 rows (8.69%) of `hospital` column had unnecessary extra character(,)
+4. There was no missing value in the entire 54,966 rows and 15 columns of data provided.
+5. The `Date of Admission` and `Discharge Date` column  was in TEXT datatype format which was converted to DATE   
+6. Irrelevant data were removed: `Row_num`, `Room_number` and the `Name` column were deleted as they were not useful for the exploratory analysis
+
+Recommendations:
+1. Each patient should be assigned a unique ID (primary key) for patient identification 
+2. Additional data sources and more data such as policy information, claims data, historical data will need to be incorporated to the dataset to ensure wholistic and comprehensive overview of the healthcare insurance dealings to inform thorough investigation for informed decision-making and development of healthcare scheme with a competitive edge
+3. Clear data entry protocols and validation rules should be established to ensure consistency in formats and datatypes
+
+Conclusion:
+The data cleaning project successfully improved the quality and reliability of the `patient_record` dataset provided by the client and the cleaned dataset is now ready for analysis and modeling. However, to develop a healthcare insurance scheme that can competitively position itself against major industry players, additional data is required to conduct a comprehensive exploratory analysis and generate actionable insights. This will enable the creation of a tailored scheme that meets the needs of patients, policyholders, improve healthcare outcomes and drive business success.
